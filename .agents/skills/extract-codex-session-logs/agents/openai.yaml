@@ -1,0 +1,7 @@
+interface:
+  display_name: "Extract Codex Session Logs"
+  short_description: "Export all Codex sessions for this repo"
+  default_prompt: "Use $extract-codex-session-logs to extract all Codex session logs for this repository."
+
+policy:
+  allow_implicit_invocation: false

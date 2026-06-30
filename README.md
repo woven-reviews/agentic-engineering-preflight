@@ -56,3 +56,14 @@ Useful flags (both scripts):
 - `--output DIR` — write to `DIR` instead of the repo root (or `--output -` for stdout).
 - a session id (or unique prefix) — export just that one session.
 
+### From inside your AI harness
+
+Each tool ships a shortcut so you can export without leaving the session:
+
+- **Claude Code** — run the `/extract-session-log` slash command
+  (`.claude/commands/extract-session-log.md`). Defaults to `--all`; append any of the flags
+  above, e.g. `/extract-session-log --strict`.
+- **Codex** — invoke the `extract-codex-session-logs` skill (as `$extract-codex-session-logs`
+  or from the skills UI; see `.agents/skills/extract-codex-session-logs/`). It runs the Codex
+  extractor with `--all`; extra args like `--strict` or `--output DIR` are passed through.
+

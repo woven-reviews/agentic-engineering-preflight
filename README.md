@@ -33,3 +33,26 @@ served, reached the backend, and the backend reached Postgres.
 - **Slow first build** — expected; let it finish once.
 
 Tear down with `docker compose down` (add `-v` to also drop the database volume).
+
+## Exporting session logs
+
+`scripts/` has two mechanical extractors that turn an AI coding session into a readable
+markdown log (no LLM, no network — stdlib only). Run them from the repo root:
+
+```bash
+python3 scripts/extract_session_log.py          # Claude Code sessions (~/.claude/projects/)
+python3 scripts/extract_codex_session_log.py    # Codex CLI sessions (~/.codex/sessions/)
+```
+
+By default each writes the most recent session for the current directory to
+`session_log.md` / `codex_session_log.md` in the repo root.
+
+Useful flags (both scripts):
+
+- `--all` — one file per session (`session_log_<id>.md` / `codex_session_log_<id>.md`).
+- `--strict` — only sessions started in *this exact directory*; skips the parent-dir walk
+  and the "newest session anywhere" fallback, so you never accidentally export an unrelated
+  project's transcript.
+- `--output DIR` — write to `DIR` instead of the repo root (or `--output -` for stdout).
+- a session id (or unique prefix) — export just that one session.
+

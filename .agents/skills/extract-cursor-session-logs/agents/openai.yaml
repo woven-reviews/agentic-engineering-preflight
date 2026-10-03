@@ -1,0 +1,7 @@
+interface:
+  display_name: "Extract Cursor Session Logs"
+  short_description: "Export Cursor Agent sessions and describe pasted images"
+  default_prompt: "Use $extract-cursor-session-logs to extract all Cursor Agent session logs for this repository and replace dumped-image markers with brief image descriptions."
+
+policy:
+  allow_implicit_invocation: false

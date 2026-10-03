@@ -36,19 +36,21 @@ Tear down with `docker compose down` (add `-v` to also drop the database volume)
 
 ## Exporting session logs
 
-`scripts/` has three mechanical extractors that turn an AI coding session into a readable
+`scripts/` has four mechanical extractors that turn an AI coding session into a readable
 markdown log (no LLM, no network — stdlib only). Run them from the repo root:
 
 ```bash
 python3 scripts/extract_session_log.py          # Claude Code sessions (~/.claude/projects/)
 python3 scripts/extract_codex_session_log.py    # Codex CLI sessions (~/.codex/sessions/)
 python3 scripts/extract_copilot_session_log.py  # GitHub Copilot CLI (~/.copilot/session-store.db)
+python3 scripts/extract_cursor_session_log.py   # Cursor Agent (~/.cursor/projects/.../agent-transcripts/)
 ```
 
 By default each writes the most recent session for the current directory to
-`session_log.md` / `codex_session_log.md` / `copilot_session_log.md` in the repo root.
+`session_log.md` / `codex_session_log.md` / `copilot_session_log.md` /
+`cursor_session_log.md` in the repo root.
 
-Useful flags (all three scripts):
+Useful flags (all four scripts):
 
 - `--all` — one file per session (`session_log_<id>.md`, etc.).
 - `--strict` — only sessions started in *this exact directory*; skips the parent-dir walk
@@ -57,8 +59,9 @@ Useful flags (all three scripts):
 - `--output DIR` — write to `DIR` instead of the repo root (or `--output -` for stdout).
 - a session id (or unique prefix) — export just that one session.
 
-Source-specific flags: the Codex extractor takes `--sessions-root DIR` and the Copilot
-extractor takes `--db PATH` to point at a non-default session store.
+Source-specific flags: the Codex extractor takes `--sessions-root DIR`, the Copilot
+extractor takes `--db PATH`, and the Cursor extractor takes `--project-dir DIR` to point at
+a non-default session store.
 
 Pasted images can't be read mechanically, so the extractors dump each one to a temp file and
 leave a `[Image dumped to … — description pending]` marker in the log. The harness shortcuts
@@ -77,6 +80,9 @@ Each tool ships a shortcut so you can export without leaving the session:
 - **GitHub Copilot** — invoke the `extract-copilot-session-logs` skill (as
   `$extract-copilot-session-logs` or from the skills UI; see
   `.agents/skills/extract-copilot-session-logs/`).
+- **Cursor** — invoke the `extract-cursor-session-logs` skill (as
+  `$extract-cursor-session-logs` or from the skills UI; see
+  `.agents/skills/extract-cursor-session-logs/`).
 
 Each shortcut runs its extractor with `--all` and passes through extra args like `--strict`
 or `--output DIR`.

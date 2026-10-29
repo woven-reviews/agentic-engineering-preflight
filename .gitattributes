@@ -7,6 +7,7 @@
 **/mvnw text eol=lf
 **/gradlew text eol=lf
 **/bin/* text eol=lf
+script/* text eol=lf
 scripts/**/*.py text eol=lf
 
 # Executed by Windows: always CRLF.

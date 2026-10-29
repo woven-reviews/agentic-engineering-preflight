@@ -1,0 +1,16 @@
+# Normalize line endings so a Windows checkout (core.autocrlf=true) doesn't
+# break scripts that run inside Linux containers from a bind mount.
+* text=auto
+
+# Executed by Linux shells or containers: always LF.
+*.sh text eol=lf
+**/mvnw text eol=lf
+**/gradlew text eol=lf
+**/bin/* text eol=lf
+script/* text eol=lf
+scripts/**/*.py text eol=lf
+
+# Executed by Windows: always CRLF.
+*.cmd text eol=crlf
+*.bat text eol=crlf
+*.ps1 text eol=crlf
